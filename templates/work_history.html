@@ -1,0 +1,208 @@
+{% include 'navbar.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Work History</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/cleaner.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha2/dist/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+</head>
+<body>
+    <div class="filter-bar">
+        <div class="filter-dropdown">
+            <!-- <label for="start_date">Start Date:</label> -->
+            <input type="text" class="form-control datepicker" id="start_date" placeholder="วันเริ่มต้น" name="start_date" value="{{ start_date|date:'%Y-%m-%d' }}">
+
+        </div>
+        <div class="filter-dropdown">
+            <!-- <label for="end_date">End Date:</label> -->
+            <input type="text" class="form-control datepicker" id="end_date" placeholder="วันสิ้นสุด" name="end_date" value="{{ end_date|date:'%Y-%m-%d' }}">
+        </div>
+        <div class="filter-dropdown">
+            <!-- <label for="cleanerFilter">Select Cleaner:</label> -->
+            <select class="form-control" id="cleanerFilter"placeholder="เจ้าหน้าที่ทำความสะอาดทั้งหมด" name="cleaner">
+                <option value="">เจ้าหน้าที่ทำความสะอาดทั้งหมด</option>
+                {% for cleaner in cleaner_choices %}
+                    <option value="{{ cleaner }}">{{ cleaner }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        
+        <button type="button" onclick="applyFilters()">Apply Filters</button>
+    
+    </div>
+
+    <!-- Your content goes here -->
+
+    <div class="container mt-5">
+        
+        <h3>ประวัติงาน</h3>
+        <div class="table-responsive">
+        <table id="workdata-table" class="table table-bordered table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th data-filter="true" data-filter-type="select">วันที่</th>
+                    <th data-filter="true" data-filter-type="select">ผู้ทำงาน</th>
+                    <th data-filter="true" data-filter-type="select">งาน</th>
+                    <th data-filter="true" data-filter-type="select">ตึก</th>
+                    <th data-filter="true" data-filter-type="select">ชั้น</th>
+                    <th data-filter="true" data-filter-type="select">ห้อง</th>
+                    <th data-filter="true" data-filter-type="select">ผู้ตรวจ</th>
+                    <th data-filter="true" data-filter-type="select">คะแนน</th>
+                    <th data-filter="true" data-filter-type="select">ความคิดเห็น</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                {% for workdata in workdata_history %}
+                <tr>
+                    <td>{{ workdata.date|date:'Y-m-d' }}</td>
+                    <td>{{ workdata.work.cleaner.user.first_name }}</td>
+                    <td>{{ workdata.work.work_name }}</td>
+                    <td>{{ workdata.work.room.building.name }}</td> 
+                    <td>{{ workdata.work.room.floor_num }}</td>  
+                    <td>{{ workdata.work.room.room_name }}</td>
+                    <td>{{ workdata.staff }}</td>
+                    <td>{{ workdata.rating }}</td>
+                    <td>{{ workdata.comment }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        </div>
+        <!-- Move the "Items per page" dropdown under the table -->
+        
+            <div class="col-md-6">
+                <form method="get">
+                    <div class="form-group">
+                        <label for="items_per_page">Items per page:</label>
+                        <select class="form-control" name="items_per_page" id="items_per_page">
+                            <option value="10" {% if items_per_page == 10 %}selected{% endif %}>10</option>
+                            <option value="20" {% if items_per_page == 20 %}selected{% endif %}>20</option>
+                            <option value="50" {% if items_per_page == 50 %}selected{% endif %}>50</option>
+                        </select>
+                    </div>
+                </div>
+                    <div class="row">
+                    
+                    <div class="col-md-12">
+                        <button type="submit" class="btn btn-primary mt-4 mb-5">Apply</button>
+                        <button type="button" class="btn btn-success float-right mt-4 mb-5" id="exportBtn">Export</button>
+                    </div>
+                </div>
+                </form>
+           
+            
+       
+
+        <!-- Display pagination controls -->
+        <div class="pagination justify-content-center">
+            <ul class="pagination">
+                {% if workdata_history.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page=1&items_per_page={{ items_per_page }}">First</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ workdata_history.previous_page_number }}&items_per_page={{ items_per_page }}">Previous</a>
+                    </li>
+                {% endif %}
+
+                <li class="page-item disabled">
+                    <span class="page-link">Page {{ workdata_history.number }} of {{ workdata_history.paginator.num_pages }}</span>
+                </li>
+
+                {% if workdata_history.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ workdata_history.next_page_number }}&items_per_page={{ items_per_page }}">Next</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ workdata_history.paginator.num_pages }}&items_per_page={{ items_per_page }}">Last</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+
+<!-- Include Bootstrap JavaScript and jQuery (optional) -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="/path/to/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.5/xlsx.full.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.7/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.7/js/dataTables.bootstrap4.min.js"></script>
+<script src="https://cdn.datatables.net/select/1.3.4/js/dataTables.select.min.js"></script>
+
+
+
+
+<!-- JavaScript for exporting table data -->
+<script>
+document.getElementById('exportBtn').addEventListener('click', function() {
+    // Select the table element
+    var table = document.querySelector('.table');
+
+    // Create a new Workbook
+    var wb = XLSX.utils.table_to_book(table, { sheet: 'Sheet1' });
+
+    // Save the Workbook to a file
+    XLSX.writeFile(wb, 'workdata.xlsx');
+});
+</script>
+
+<script>
+    $(document).ready(function() {
+        // Initialize the DataTable
+        var table = $('#workdata-table').DataTable();
+        // Initialize datepickers
+        $('.datepicker').datepicker({
+            format: 'Y-m-d', // Specify the date format
+            autoclose: true,
+        });
+        // ... (other DataTable and filter setup code)
+    });
+</script>
+
+</script>
+<script>
+    // JavaScript code to set selected options based on URL parameters
+    window.addEventListener('DOMContentLoaded', function () {
+        const urlParams = new URLSearchParams(window.location.search);
+        const start_date = urlParams.get('start_date');
+        const end_date = urlParams.get('end_date');
+        const cleaner = urlParams.get('cleaner');
+        if (start_date) {
+            document.getElementById('start_date').value = start_date;
+        }
+
+        if (end_date) {
+            document.getElementById('end_date').value = end_date;
+        }
+
+        if (cleaner) {
+            document.getElementById('cleanerFilter').value = cleaner;
+        }
+    });
+
+    // Rest of your JavaScript code for applying filters
+    function applyFilters() {
+        const start_date = document.getElementById('start_date').value;
+        const end_date = document.getElementById('end_date').value;
+        const cleaner = document.getElementById('cleanerFilter').value;
+
+        let url = window.location.href.split('?')[0];
+        if (cleaner || start_date || end_date ) {
+            url += `?start_date=${start_date}&end_date=${end_date}&cleaner=${cleaner}`;
+        }
+        window.location.href = url;
+    }
+</script>
+
+
+</body>
+</html>

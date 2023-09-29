@@ -1,0 +1,341 @@
+{% include 'navbar.html' %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/cleaner.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha2/dist/js/bootstrap.min.js"></script>
+   
+    </style>
+
+</head>
+<body>
+    <div class="filter-bar">
+        <div class="filter-dropdown">
+            
+            <select id="buildingFilter">
+                <option value="">ตึกทั้งหมด</option>
+                {% for building in building_choices %}
+                    <option value="{{ building.name }}">{{ building.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="filter-dropdown">
+            
+            <select id="floorFilter">
+                <option value="">ชั้นทั้งหมด</option>
+                {% for floor in floor_choices %}
+                    <option value="{{ floor }}">{{ floor }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="filter-dropdown">
+           
+            <select id="roomFilter">
+                <option value="">พิกัดทั้งหมด</option>
+                {% for room in room_choices %}
+                    <option value="{{ room }}">{{ room }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="filter-dropdown">
+           
+            <select id="cleanerFilter">
+                <option value="">เจ้าหน้าที่ทำความสะอาดทั้งหมด</option>
+                {% for cleaner in cleaner_choices %}
+                    <option value="{{ cleaner }}">{{ cleaner }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        
+        <div class="filter-dropdown">
+            <select id="statusFilter">
+                <option value="">สถานะทั้งหมด</option>
+                {% for status, label in status_choices %}
+                    <option value="{{ status }}">{{ label }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        
+        <button type="button" style="font-size: 20px;" onclick="applyFilters()">ยืนยัน</button>
+    </div>
+   
+    <div class="container mt-5 te">
+        <h3 class="text-center">งานทั้งหมดในวันนี้</h3>
+        <div class="row">
+            {% for workitem in works_data %}
+            {% with workitem.worksdata_set.first as work_data %}
+            {% if work_data.status != "ประเมินเรียบร้อย" %}
+                <div class="col-md-4 mb-5">
+                    <div class="card mb-3 text-center">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-center">
+                                <img src="{{ workitem.cleaner.profile_image.url }}" alt="{{ workitem.cleaner.user.username }}'s Profile" width="90" height="90">
+                            </div>
+                            <h5 class="card-title{{ workitem.id }} text-center">{{ workitem.work_name }}</h5>
+                            <p class="card-text{{ workitem.id }}">สถานที่: <span >{{ workitem.room.room_name }}</span></p>
+                            <p class="card-text{{ workitem.id }}">อาคาร: <span >{{ workitem.room.building.name }} ชั้น {{ workitem.room.floor_num }}</span></p>
+                            <p class="card-text{{ workitem.id }}" style="display: none;" ><span>{{ workitem.day }}</span></p>
+                            <p class="card-text{{ workitem.id }}">ผู้ทำงาน: <span id="taskUser{{ workitem.id }}">{{ workitem.cleaner.user.get_full_name }}</span></p>
+                            <p class="card-text{{ workitem.id }}">สถานะ: <span id="taskStatus{{ workitem.id }}">
+                           
+                                    {% if work_data %}
+                                        {{ work_data.status }}
+                                    {% else %}
+                                        ยังไม่อัพเดตสถานะ
+                                    {% endif %}
+                            </span></p>
+                            {% if work_data.status == 'เสร็จสิ้น' %}
+                            <div class="d-flex justify-content-center m-3 mt-4">
+                                <button class="btn" id="Reset{{ workitem.id }}" onclick="resetTaskStatus({{ workitem.id }}, 'งานยังไม่เรียบร้อย')">ส่งงานใหม่</button>
+                                <button class="btn" style="margin-left: 20px;" id="verifyBtn{{ workitem.id }}"  onclick="setCurrentWorkId({{ workitem.id }})">ประเมินงาน</button>
+                            </div>
+                            {% else %}
+                            <div class="d-flex justify-content-center m-3 mt-4">
+                                <button  class="btn" id="Reset{{ workitem.id }}" onclick="resetTaskStatus({{ workitem.id }}, 'งานยังไม่เรียบร้อย')" disabled>ส่งงานใหม่</button>
+                                <button class="btn" style="margin-left: 20px;" id="verifyBtn{{ workitem.id }}"  onclick="setCurrentWorkId({{ workitem.id }})" disabled>ประเมินงาน</button>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% else %}
+            {% endif %}
+                {% endwith %} 
+            {% endfor %}
+        </div>
+    </div>
+    <div class="modal fade" id="evaluationModal" tabindex="-1" aria-labelledby="evaluationModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header "style="background-color: #a02334;">
+                    <h5 class="modal-title text-white" id="evaluationModalLabel"> ประเมินงาน</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                
+                    <div class="modal-body">
+                        <!-- Staff Dropdown -->
+                        <div class="mb-3">
+                            <label for="staffDropdown" class="form-label">staff:</label>
+                            <select class="form-select" id="staffDropdown">
+                            <option value="">เลือกผู้ตรวจ</option>
+                            {% for checker in checker_choices %}
+                            <option value="{{ checker.first_name }} {{ checker.last_name }}">{{ checker.first_name }} {{ checker.last_name }}</option>
+                            {% endfor %}
+                            </select>
+                        </div>
+                        <!-- Rating Dropdown -->
+                        <div class="mb-3">
+                            <label for="ratingDropdown" class="form-label">Rating:</label>
+                            <select class="form-select" id="ratingDropdown">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                            </select>
+                        </div>
+                        <!-- Comment Text Area -->
+                        <div class="mb-3">
+                            <label for="commentTextarea" class="form-label">Comment:</label>
+                            <textarea class="form-control" id="commentTextarea" rows="3"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
+                        <button type="button" class="btn btn-primary"  data-dismiss="modal" onclick="saveEvaluation()">Save Evaluation</button>
+                    </div>
+              
+            </div>
+        </div>
+    </div>
+
+     
+
+    <script>
+        document.getElementById('buildingFilter').addEventListener('change', function () {
+        const selectedBuilding = this.value;
+        const floorFilter = document.getElementById('floorFilter');
+        const floorsByBuilding = {
+            'ตึกเก่า': [1, 2, 3, 4],
+            'ตึกใหม่': [1, 2 ],
+            // Add mappings for other buildings as needed
+        };
+
+        // Clear current floor options
+        while (floorFilter.options.length > 1) {
+            floorFilter.options.remove(1);
+        }
+
+        // Add new floor options based on the selected building
+        if (selectedBuilding) {
+            const floors = floorsByBuilding[selectedBuilding];
+            if (floors) {
+                for (const floor of floors) {
+                    const option = document.createElement('option');
+                    option.value = floor;
+                    option.textContent = floor;
+                    floorFilter.appendChild(option);
+                }
+            }
+        }
+    });
+        // JavaScript code to set selected options based on URL parameters
+        window.addEventListener('DOMContentLoaded', function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const building = urlParams.get('building');
+            const floor = urlParams.get('floor');
+            const work = urlParams.get('room');
+            const cleaner = urlParams.get('cleaner');
+            const status = urlParams.get('status');
+    
+            if (building) {
+                document.getElementById('buildingFilter').value = building;
+            }
+            if (floor) {
+                document.getElementById('floorFilter').value = floor;
+            }
+            if (work) {
+                document.getElementById('roomFilter').value = room;
+            }
+            if (cleaner) {
+                document.getElementById('cleanerFilter').value = cleaner;
+            }
+            if (status) {
+                document.getElementById('statusFilter').value = status;
+            }
+        });
+    
+        // Rest of your JavaScript code for applying filters
+        function applyFilters() {
+            const building = document.getElementById('buildingFilter').value;
+            const floor = document.getElementById('floorFilter').value;
+            const room = document.getElementById('roomFilter').value;
+            const cleaner = document.getElementById('cleanerFilter').value;
+            const status = document.getElementById('statusFilter').value;
+            
+            let url = window.location.href.split('?')[0];
+            if (building || floor || room || cleaner || status ) {
+                url += `?building=${building}&floor=${floor}&room=${room}&cleaner=${cleaner}&status=${status}`;
+            }
+            window.location.href = url;
+        }
+    </script>
+  
+
+  <script>
+    let currentWorkId = null;
+
+    function setCurrentWorkId(workId) {
+    currentWorkId = workId;
+    console.log('Button clicked, workId is:', workId);
+    var myModal = new bootstrap.Modal(document.getElementById('evaluationModal'), {});
+    myModal.show();
+}
+
+function saveEvaluation() {
+    const staff = document.getElementById('staffDropdown').value;
+    const rating = document.getElementById('ratingDropdown').value;
+    const comment = document.getElementById('commentTextarea').value;
+
+    fetch(`/submit_verification/${currentWorkId}/`, { // use currentWorkId here
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            // Include CSRF token if using Django
+            'X-CSRFToken': getCookie('csrftoken')
+        },
+        body: JSON.stringify({
+            work_id: currentWorkId,
+            staff,
+            rating,
+            comment
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        
+        if (data.message === 'Evaluation saved successfully') {
+            alert('Evaluation saved successfully!');
+        } else {
+            alert(`Error: ${data.message}`);
+        } 
+    })
+    .catch(error => {
+        console.error('เกิดข้อผิดพลาดในการส่งคำขอ:', error);
+    });
+}
+
+
+
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+
+</script>
+
+
+
+    <script>
+      
+        function resetTaskStatus(work_id, status) {
+            // Make an AJAX request to reset the status
+            fetch(`/reset_status/${work_id}/${status}/`, {
+                method: 'GET',
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.message === 'Status updated successfully') {
+                    // Update the status elements in your HTML
+                    var statusElement = document.getElementById(`taskStatus${work_id}`);
+                    var ResetButton = document.getElementById(`Reset${work_id}`);
+    
+                    if (status === 'งานยังไม่เรียบร้อย') {
+                        statusElement.textContent = 'งานยังไม่เรียบร้อย';
+                        ResetButton.style.display = 'none';
+                        } else {
+                            console.error('ไม่สามารถกดปุ่ม "Reset" ได้ในสถานะนี้');
+                        }
+                    
+    
+                    // You can access the work_id from the response
+                    console.log(`Work ID: ${data.work_id}`);
+                } else {
+                    console.error(`เกิดข้อผิดพลาด: ${data.message}`);
+                }
+            })
+            .catch(error => {
+                console.error('เกิดข้อผิดพลาดในการส่งคำขอ:', error);
+            });
+        }
+    </script>
+<script>
+    function toggleFilter() {
+    const filterBar = document.getElementById('filterBar');
+    filterBar.style.bottom = filterBar.style.bottom === '0px' ? '-500px' : '0px';
+}
+</script>
+
+</body>
+</html>

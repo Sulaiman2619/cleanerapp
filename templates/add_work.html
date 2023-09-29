@@ -1,0 +1,83 @@
+{% include 'navbar.html' %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Work</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/add.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha2/dist/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+</head>
+
+    <body class="background">
+    <h3 class="text-center mt-4" style="color: #14213D; font-weight: bold;">Add Work</h3>
+    <div class="container mt-5 text-center mb-5">
+        <div class="container bg d-flex flex-column justify-content-center align-items-center">
+            <div class="images">
+            <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 198 194" fill="none">
+                <path d="M197.485 96.7733C197.485 150.22 153.277 193.547 98.7427 193.547C44.2086 193.547 0 150.22 0 96.7733C0 43.3269 44.2086 0 98.7427 0C153.277 0 197.485 43.3269 197.485 96.7733Z" fill="#D9D9D9"/>
+            
+                <!-- Include the image and center it -->
+                <image x="24" y="22" width="150" height="150" xlink:href="{% static 'images/ftu_logo-removebg-preview.png' %}" />
+            </svg>
+        </div>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group row m-3">
+                <label for="work_name" class="col-sm-5 col-form-label">Work Name:</label>
+                <div class="col-sm-7">
+                    <input type="text" class="form-control bor" id="work_name" name="work_name" required>
+                </div>
+            </div>
+
+            <div class="form-group row m-3">
+                <label for="work_room" class="col-sm-5 col-form-label">Select Room:</label>
+                <div class="col-sm-7">
+                    <select class="form-control bor" id="work_room" name="work_room">
+                        {% for room in rooms %}
+                            <option value="{{ room.id }}">{{ room.building }} ชั้น {{ room.floor_num }} ห้อง {{ room.room_name }} </option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group row m-3">
+                <label for="work_cleaner" class="col-sm-5 col-form-label">Cleaner:</label>
+                <div class="col-sm-7">
+                    <select class="form-control bor" id="work_cleaner" name="work_cleaner" required>
+                        <option value="" disabled selected>Select a Cleaner</option>
+                        {% for cleaner in cleaners %}
+                            <option value="{{ cleaner.id }}">{{ cleaner.user.get_full_name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group row m-3">
+                <label for="work_day" class="col-sm-5 col-form-label">Date:</label>
+                <div class="col-sm-7">
+                    <select class="form-control bor" id="work_day" name="work_day" required>
+                        <option value="" disabled selected>เลือกวัน</option>
+                        <option value="Sunday">Sunday</option>
+                        <option value="Monday">Monday</option>
+                        <option value="Tuesday">Tuesday</option>
+                        <option value="Wednesday">Wednesday</option>
+                        <option value="Thursday">Thursday</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Add fields for other relevant information -->
+            <button type="submit" class="btn btn-primary m-3">Add Work</button>
+        </form>
+    </div>
+    </div>
+
+    
+</body>
+</html>

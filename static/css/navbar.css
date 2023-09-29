@@ -1,0 +1,9 @@
+.container .image-brand {
+    width: 50px;
+    height: 50px;
+    flex-shrink: 0;
+}
+
+.show {
+    text-align: center;
+}

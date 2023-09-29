@@ -1,0 +1,50 @@
+{% include 'navbar.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Work</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/edit.css' %}">
+    <!-- Add any necessary CSS or Bootstrap includes here -->
+</head>
+<body>  
+
+    <div class="content">
+
+            <h3 class="text-center mt-4" style="font-size: 30px; color: #14213D; font-weight: bold;">Edit Work</h3>
+            <div class="container bg mt-5 d-flex flex-column justify-content-center align-items-center">
+            <div class="images">
+            <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 198 194" fill="none">
+                <path d="M197.485 96.7733C197.485 150.22 153.277 193.547 98.7427 193.547C44.2086 193.547 0 150.22 0 96.7733C0 43.3269 44.2086 0 98.7427 0C153.277 0 197.485 43.3269 197.485 96.7733Z" fill="#D9D9D9"/>
+            
+                <!-- Include the image and center it -->
+                <image x="24" y="22" width="150" height="150" xlink:href="{% static 'images/ftu_logo-removebg-preview.png' %}" />
+            </svg>
+        </div>
+        <p class="text-center">งาน : {{ work.work_name }} </p>
+        <p class="text-center">สถานที่ : {{ work.room }}</p>
+            <form method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <div class="d-flex justify-content-center align-items-center">
+                        <p>
+                            <label for="cleaner" style="color: white; font-size: 18px; font-weight: 500;">Select Cleaner</label>
+                        </p>
+                    </div>
+                    <select class="form-control" id="cleaner" name="cleaner" style="border-radius: 20px;">
+                        {% for cleaner in cleaners %}
+                            <option value="{{ cleaner.id }}"{% if work.cleaner.id == cleaner.id %}selected{% endif %} style="text-align: center;">{{ cleaner.user.get_full_name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="d-flex justify-content-center align-items-center">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+</body>
+</html>

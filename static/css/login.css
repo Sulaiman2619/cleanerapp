@@ -1,0 +1,55 @@
+body {
+    background: radial-gradient(circle at top left, #940505a5, transparent),
+                radial-gradient(circle at bottom right, #efd8ad, transparent);
+    background-size: cover; /* Use cover to make the background cover the entire body */
+    background-repeat: no-repeat;
+    min-height: 100vh; /* Use min-height to ensure the background covers tall content */
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+/* กำหนดลักษณะของกล่องล็อกอิน */
+.login-box {
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin: 0 auto;
+    max-width: 400px;
+    margin-top: 100px;
+    overflow: hidden; /* เพิ่ม overflow: hidden เพื่อป้องกัน hr ขยับออกนอกกล่อง */
+}
+/* กำหนดระยะห่างของข้อมูลในกล่องล็อกอิน */
+.login-box label,
+.login-box input {
+    margin-bottom: 10px;
+}
+/* กำหนดสีของปุ่มล็อกอิน */
+.login-box button {
+    background-color: #007bff;
+    color: white;
+}
+/* กำหนดระยะห่างด้านล่างของปุ่ม */
+.login-box button {
+    margin-top: 10px;
+}
+/* กำหนดเอฟเฟกต์ขยับเมื่อ hover */
+.login-box:hover hr {
+    width: 100%; /* เมื่อ hover, ขยายความกว้างของ hr เป็น 100% */
+}
+/* กำหนดสีและตำแหน่งของข้อความ "Login" */
+.login-header {
+    color: crimson;
+    text-align: left;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+/* กำหนดตำแหน่งของรูปไอคอนคน */
+.person-icon {
+    width: 50px; /* กำหนดขนาดของรูปไอคอน */
+    margin: 0 auto; /* ย้ายไอคอนไปตรงกลางของ form */
+    display: block;
+}

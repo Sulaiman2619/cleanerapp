@@ -1,0 +1,30 @@
+.background {
+    background: #8D99AE;
+}
+.container.mt-5 {
+    background: #780000;
+    border-radius: 70px;
+    width: 400px;
+    height: auto;
+    flex-shrink: 0;
+}
+
+.container.bg {
+    padding-top: 15px;
+    padding-bottom: 10px;
+}
+
+label {
+    color: white;
+    font-weight: 500;
+}
+
+
+.form-group.row label {
+    margin-top: -5px;
+}
+
+.form-control.bor {
+    border-radius: 40px;
+}
+
