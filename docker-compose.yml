@@ -1,0 +1,13 @@
+version: "3.8"
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/cleanerapp
+    ports:
+      - 8082:8000
+    image: cleanerapp:django
+    container_name: cleanerapp_container
+    # command: python manage.py runserver 0.0.0.0:8000
