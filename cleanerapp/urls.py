@@ -16,6 +16,7 @@ urlpatterns = [
     path('add_work/', views.add_work, name='add_work'),
     path('workdata-history/', views.get_workdata_history, name='workdata_history'),
     path('submit_verification/<int:work_id>/', views.submit_verification, name='submit_verification'),
-    path('logout/', auth_views.LogoutView.as_view(), name='logout'),
+    path('logout/', views.Logout, name='logout'),
+
     # Add other URL patterns as needed
 ]

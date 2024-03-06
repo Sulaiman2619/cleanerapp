@@ -6,6 +6,7 @@ from django.http import  JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import *
 from datetime import datetime
+from django.contrib.auth import authenticate, login, logout
 from django.views.decorators.csrf import csrf_exempt
 from django.db import transaction
 from django.core.paginator import Paginator
@@ -88,6 +89,12 @@ def login_view(request):
 
 # Rest of your views and URLs
 
+def Logout(request):
+    # sign user out
+    logout(request)
+
+    # Redirect to sign-in page
+    return redirect('login')
 
 @login_required
 @cleaner_required
