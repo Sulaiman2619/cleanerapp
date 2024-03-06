@@ -7,7 +7,7 @@ services:
       - .:/cleanerapp
     command: ["sh", "start.sh"]
     ports:
-      - 8028:8000
+      - 8025:8000
     image: cleanerapp:django
     container_name: cleanerapp_container
     # command: python manage.py runserver 0.0.0.0:8000
