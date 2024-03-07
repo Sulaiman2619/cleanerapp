@@ -85,8 +85,13 @@
                     <div class="card mb-3 text-center">
                         <div class="card-body">
                             <div class="d-flex justify-content-center">
-                                <img src="{{ workitem.cleaner.profile_image.url }}" alt="{{ workitem.cleaner.user.username }}'s Profile" width="90" height="90">
+                                {% if workitem.cleaner.profile_image %}
+                                    <img src="{{ workitem.cleaner.profile_image.url }}" alt="{{ workitem.cleaner.user.username }}'s Profile" width="90" height="90">
+                                {% else %}
+                                    <img src="https://icon2.cleanpng.com/20180419/sbw/kisspng-aspria-fitness-computer-icons-user-clip-art-my-account-icon-5ad833cf5b08f0.6326680415241184793729.jpg" alt="Default Profile" width="90" height="90">
+                                {% endif %}
                             </div>
+                            
                             <h5 class="card-title{{ workitem.id }} text-center">{{ workitem.work_name }}</h5>
                             <p class="card-text{{ workitem.id }}">สถานที่: <span >{{ workitem.room.room_name }}</span></p>
                             <p class="card-text{{ workitem.id }}">อาคาร: <span >{{ workitem.room.building.name }} ชั้น {{ workitem.room.floor_num }}</span></p>
