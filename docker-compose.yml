@@ -3,9 +3,9 @@ services:
   app:
     build:
       context: .
+      dockerfile: Dockerfile
     volumes:
       - .:/cleanerapp
-    command: ["sh", "start.sh"]
     ports:
       - 8025:8000
     image: cleanerapp:django

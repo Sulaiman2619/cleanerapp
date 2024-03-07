@@ -15,6 +15,9 @@ class Cleaner(models.Model):
 
     def __str__(self):
         return self.user.first_name
+    
+    class Meta:
+        verbose_name_plural = "พนักงานทำความสะอาด"
 
 
 class Building(models.Model):
@@ -23,6 +26,8 @@ class Building(models.Model):
 
     def __str__(self):
         return self.name
+    class Meta:
+        verbose_name_plural = "ตึก"
 
 class Room(models.Model):
     room_name = models.CharField(max_length=100)
@@ -34,6 +39,7 @@ class Room(models.Model):
 
     class Meta:
         unique_together = ('room_name', 'building', 'floor_num')
+        verbose_name_plural = "ห้อง"
 
 class Work(models.Model):
     work_name = models.CharField(max_length=100)
@@ -55,6 +61,7 @@ class Work(models.Model):
 
     class Meta:
         unique_together = ('work_name', 'cleaner', 'room', 'day')
+        verbose_name_plural = "งาน"
 
 class Checker(models.Model):
     first_name = models.CharField(max_length=255)
@@ -62,6 +69,9 @@ class Checker(models.Model):
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
+
+    class Meta:
+        verbose_name_plural = "พนักงานเช็คความสะอาด"
 
 class WorksData(models.Model):
     date = models.DateField()
@@ -73,10 +83,18 @@ class WorksData(models.Model):
     
     def __str__(self):
         return f"WorksData for Work {self.work_id}, Status: {self.status}"
+
+    class Meta:
+        verbose_name_plural = "บันทึกข้อมูลทำความสะอาด"
+
+
     
 
 class Staff(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     def __str__(self):
        return self.user.first_name
+    
+    class Meta:
+        verbose_name_plural = "แอดมิน"
 
