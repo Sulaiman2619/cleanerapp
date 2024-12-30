@@ -11,38 +11,36 @@
 
 <body style="font-family: 'Kanit-Medium', sans-serif;">
 
-    <div class="filter-bar d-flex flex-wrap justify-content-center p-3 bg-light rounded">
-        <div class="filter-dropdown mb-3 flex-grow-1">
-            <select id="buildingFilter" class="form-control">
-                <option value="">ตึกทั้งหมด</option>
-                {% for building in building_choices %}
-                    <option value="{{ building.name }}">{{ building.name }}</option>
-                {% endfor %}
-            </select>
-        </div>
-        <div class="filter-dropdown mb-3 flex-grow-1">
-            <select id="floorFilter" class="form-control">
-                <option value="">ชั้นทั้งหมด</option>
-                {% for floor in floor_choices %}
-                    <option value="{{ floor }}">{{ floor }}</option>
-                {% endfor %}
-            </select>
-        </div>
-        <div class="filter-dropdown mb-3 flex-grow-1">
-            <select id="roomFilter" class="form-control">
-                <option value="">พิกัดทั้งหมด</option>
-                {% for room in room_choices %}
-                    <option value="{{ room }}">{{ room }}</option>
-                {% endfor %}
-            </select>
-        </div>
-        <div class="filter-dropdown mb-3 flex-grow-1">
-            <button type="button" onclick="applyFilters()" class="btn btn-primary w-100">ยืนยัน</button>
-        </div>
+<div class="filter-bar">
+    <div class="filter-dropdown">
+        <select id="buildingFilter">
+            <option value="">ตึกทั้งหมด</option>
+            <!-- Add options dynamically from your database -->
+            {% for building in building_choices %}
+                <option value="{{ building.name }}">{{ building.name }}</option>
+            {% endfor %}
+        </select>
     </div>
-    
-    
-    
+    <div class="filter-dropdown">
+        <select id="floorFilter">
+            <option value="">ชั้นทั้งหมด</option>
+            <!-- Add options dynamically from your database -->
+            {% for floor in floor_choices %}
+                <option value="{{ floor }}">{{ floor }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="filter-dropdown">
+        <select id="roomFilter">
+            <option value="">พิกัดทั้งหมด</option>
+            {% for room in room_choices %}
+                <option value="{{ room }}">{{ room }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <button type="button" onclick="applyFilters()">ยืนยัน</button>
+</div>
 <!-- Your content goes here -->
 <div class="container mt-5 content">
     <h3 class="text-center">งานที่คุณต้องทำสำหรับวันนี้</h3>
