@@ -17,6 +17,7 @@ urlpatterns = [
     path('workdata-history/', views.get_workdata_history, name='workdata_history'),
     path('submit_verification/<int:work_id>/', views.submit_verification, name='submit_verification'),
     path('logout/', views.Logout, name='logout'),
+    path('register/', views.register_view, name='register'),
 
     # Add other URL patterns as needed
 ]

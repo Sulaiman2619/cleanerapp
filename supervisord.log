@@ -1,0 +1,101 @@
+2024-09-06 07:04:57,019 CRIT Supervisor is running as root.  Privileges were not dropped because no user is specified in the config file.  If you intend to run as root, you can set user=root in the config file to avoid this message.
+2024-09-06 07:04:57,026 INFO supervisord started with pid 1
+2024-09-06 07:04:58,030 INFO spawned: 'web' with pid 7
+2024-09-06 07:04:58,034 INFO spawned: 'scheduler' with pid 8
+2024-09-06 07:04:58,132 WARN exited: scheduler (exit status 1; not expected)
+2024-09-06 07:04:59,133 INFO success: web entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2024-09-06 07:04:59,136 INFO spawned: 'scheduler' with pid 10
+2024-09-06 07:04:59,189 WARN exited: scheduler (exit status 1; not expected)
+2024-09-06 07:05:01,568 INFO spawned: 'scheduler' with pid 12
+2024-09-06 07:05:01,626 WARN exited: scheduler (exit status 1; not expected)
+2024-09-06 07:05:04,632 INFO spawned: 'scheduler' with pid 13
+2024-09-06 07:05:04,692 WARN exited: scheduler (exit status 1; not expected)
+2024-09-06 07:05:05,694 INFO gave up: scheduler entered FATAL state, too many start retries too quickly
+2024-09-07 11:47:47,771 CRIT Supervisor is running as root.  Privileges were not dropped because no user is specified in the config file.  If you intend to run as root, you can set user=root in the config file to avoid this message.
+2024-09-07 11:47:47,776 INFO supervisord started with pid 1
+2024-09-07 11:47:48,778 INFO spawned: 'web' with pid 7
+2024-09-07 11:47:48,779 INFO spawned: 'scheduler' with pid 8
+2024-09-07 11:47:48,842 WARN exited: scheduler (exit status 1; not expected)
+2024-09-07 11:47:49,843 INFO success: web entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2024-09-07 11:47:49,845 INFO spawned: 'scheduler' with pid 10
+2024-09-07 11:47:49,885 WARN exited: scheduler (exit status 1; not expected)
+2024-09-07 11:47:52,146 INFO spawned: 'scheduler' with pid 12
+2024-09-07 11:47:52,200 WARN exited: scheduler (exit status 1; not expected)
+2024-09-07 11:47:55,226 INFO spawned: 'scheduler' with pid 17
+2024-09-07 11:47:55,275 WARN exited: scheduler (exit status 1; not expected)
+2024-09-07 11:47:55,320 INFO gave up: scheduler entered FATAL state, too many start retries too quickly
+2024-09-07 11:49:19,104 WARN received SIGTERM indicating exit request
+2024-09-07 11:49:19,105 INFO waiting for web to die
+2024-09-07 11:49:20,189 INFO stopped: web (exit status 0)
+2024-09-07 11:49:55,609 CRIT Supervisor is running as root.  Privileges were not dropped because no user is specified in the config file.  If you intend to run as root, you can set user=root in the config file to avoid this message.
+2024-09-07 11:49:55,613 INFO supervisord started with pid 1
+2024-09-07 11:49:56,616 INFO spawned: 'web' with pid 7
+2024-09-07 11:49:56,619 INFO spawned: 'scheduler' with pid 8
+2024-09-07 11:49:56,664 WARN exited: scheduler (exit status 1; not expected)
+2024-09-07 11:49:57,678 INFO success: web entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2024-09-07 11:49:57,679 INFO spawned: 'scheduler' with pid 11
+2024-09-07 11:49:57,720 WARN exited: scheduler (exit status 1; not expected)
+2024-09-07 11:49:59,726 INFO spawned: 'scheduler' with pid 12
+2024-09-07 11:49:59,773 WARN exited: scheduler (exit status 1; not expected)
+2024-09-07 11:50:02,779 INFO spawned: 'scheduler' with pid 13
+2024-09-07 11:50:02,823 WARN exited: scheduler (exit status 1; not expected)
+2024-09-07 11:50:03,825 INFO gave up: scheduler entered FATAL state, too many start retries too quickly
+2024-09-07 11:52:23,343 CRIT Supervisor is running as root.  Privileges were not dropped because no user is specified in the config file.  If you intend to run as root, you can set user=root in the config file to avoid this message.
+2024-09-07 11:52:23,347 INFO supervisord started with pid 1
+2024-09-07 11:52:24,351 INFO spawned: 'web' with pid 7
+2024-09-07 11:52:24,353 INFO spawned: 'scheduler' with pid 8
+2024-09-07 11:52:24,399 WARN exited: scheduler (exit status 1; not expected)
+2024-09-07 11:52:25,351 INFO success: web entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2024-09-07 11:52:26,353 INFO spawned: 'scheduler' with pid 11
+2024-09-07 11:52:26,402 WARN exited: scheduler (exit status 1; not expected)
+2024-09-07 11:52:28,408 INFO spawned: 'scheduler' with pid 12
+2024-09-07 11:52:28,451 WARN exited: scheduler (exit status 1; not expected)
+2024-09-07 11:52:31,456 INFO spawned: 'scheduler' with pid 13
+2024-09-07 11:52:31,498 WARN exited: scheduler (exit status 1; not expected)
+2024-09-07 11:52:32,500 INFO gave up: scheduler entered FATAL state, too many start retries too quickly
+2024-09-07 11:55:40,059 CRIT Supervisor is running as root.  Privileges were not dropped because no user is specified in the config file.  If you intend to run as root, you can set user=root in the config file to avoid this message.
+2024-09-07 11:55:40,064 INFO supervisord started with pid 1
+2024-09-07 11:55:41,067 INFO spawned: 'web' with pid 7
+2024-09-07 11:55:41,072 INFO spawned: 'scheduler' with pid 8
+2024-09-07 11:55:41,117 WARN exited: scheduler (exit status 1; not expected)
+2024-09-07 11:55:42,088 INFO success: web entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2024-09-07 11:55:43,091 INFO spawned: 'scheduler' with pid 11
+2024-09-07 11:55:43,132 WARN exited: scheduler (exit status 1; not expected)
+2024-09-07 11:55:45,137 INFO spawned: 'scheduler' with pid 12
+2024-09-07 11:55:45,179 WARN exited: scheduler (exit status 1; not expected)
+2024-09-07 11:55:48,185 INFO spawned: 'scheduler' with pid 13
+2024-09-07 11:55:48,229 WARN exited: scheduler (exit status 1; not expected)
+2024-09-07 11:55:49,231 INFO gave up: scheduler entered FATAL state, too many start retries too quickly
+2024-09-07 11:57:42,433 WARN received SIGTERM indicating exit request
+2024-09-07 11:57:42,434 INFO waiting for web to die
+2024-09-07 11:57:43,528 INFO stopped: web (exit status 0)
+2024-09-07 11:58:22,730 CRIT Supervisor is running as root.  Privileges were not dropped because no user is specified in the config file.  If you intend to run as root, you can set user=root in the config file to avoid this message.
+2024-09-07 11:58:22,734 INFO supervisord started with pid 1
+2024-09-07 11:58:23,737 INFO spawned: 'web' with pid 7
+2024-09-07 11:58:23,739 INFO spawned: 'scheduler' with pid 8
+2024-09-07 11:58:23,791 WARN exited: scheduler (exit status 1; not expected)
+2024-09-07 11:58:24,793 INFO success: web entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2024-09-07 11:58:24,796 INFO spawned: 'scheduler' with pid 11
+2024-09-07 11:58:24,869 WARN exited: scheduler (exit status 1; not expected)
+2024-09-07 11:58:26,943 INFO spawned: 'scheduler' with pid 12
+2024-09-07 11:58:26,993 WARN exited: scheduler (exit status 1; not expected)
+2024-09-07 11:58:29,998 INFO spawned: 'scheduler' with pid 13
+2024-09-07 11:58:30,040 WARN exited: scheduler (exit status 1; not expected)
+2024-09-07 11:58:31,041 INFO gave up: scheduler entered FATAL state, too many start retries too quickly
+2024-09-07 12:00:05,609 WARN received SIGTERM indicating exit request
+2024-09-07 12:00:05,609 INFO waiting for web to die
+2024-09-07 12:00:06,707 INFO stopped: web (exit status 0)
+2024-11-05 14:35:30,478 CRIT Supervisor is running as root.  Privileges were not dropped because no user is specified in the config file.  If you intend to run as root, you can set user=root in the config file to avoid this message.
+2024-11-05 14:35:30,482 INFO supervisord started with pid 1
+2024-11-05 14:35:31,485 INFO spawned: 'web' with pid 7
+2024-11-05 14:35:31,487 INFO spawned: 'scheduler' with pid 8
+2024-11-05 14:35:31,570 WARN exited: scheduler (exit status 1; not expected)
+2024-11-05 14:35:32,572 INFO success: web entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2024-11-05 14:35:32,574 INFO spawned: 'scheduler' with pid 10
+2024-11-05 14:35:32,615 WARN exited: scheduler (exit status 1; not expected)
+2024-11-05 14:35:35,073 INFO spawned: 'scheduler' with pid 12
+2024-11-05 14:35:35,146 WARN exited: scheduler (exit status 1; not expected)
+2024-11-05 14:35:36,150 WARN received SIGTERM indicating exit request
+2024-11-05 14:35:36,152 INFO waiting for web to die
+2024-11-05 14:35:37,152 WARN received SIGTERM indicating exit request
+2024-11-05 14:35:37,223 INFO stopped: web (exit status 0)
